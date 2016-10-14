@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+              android:clipToPadding="true"
+			  android:orientation="vertical">
+	<!-- 标题的布局 -->
+	<LinearLayout
+
+		android:id="@+id/ll_mainactivity_header"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:orientation="horizontal"
+		android:gravity="center_vertical"
+		android:background="@color/color_green">
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/logo"
+			/>
+	</LinearLayout>
+	<!-- 内容布局 -->
+	<RelativeLayout android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"
+					android:gravity="center"
+		>
+		<FrameLayout
+			android:id="@+id/fl_container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			>
+		</FrameLayout>
+		<TextView
+			android:id="@+id/tv_mainactivity_title"
+			android:visibility="gone"
+			android:textSize="@dimen/text_size_20"
+			android:text="新闻"
+			android:gravity="center"
+			android:textColor="#000"
+			android:background="@color/color_green"
+			android:paddingLeft="10dp"
+			android:paddingBottom="30dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	</RelativeLayout>
+	<include layout="@layout/layout_bottom_select"></include>
+</LinearLayout>

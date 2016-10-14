@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate  xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    >
+    <!-- 
+    
+    android:fromDegrees="0"   旋转开始的角度
+    android:toDegrees="360"	旋转结束的角度
+    android:pivotX="50%"  旋转中心
+    android:pivotY="50%" 旋转中心
+     -->
+<shape 
+    android:shape="ring"
+    android:useLevel="false"
+    android:innerRadius="16dp"
+    android:thickness="4dp">
+    
+    
+    <!-- 
+    
+    android:shape="ring"  形状是圆环
+    android:useLevel="false"
+    android:innerRadius="10dp"   圆环内径
+    android:thickness="3dp">   圆环的宽度
+     -->
+    <gradient 
+        android:centerColor="#9f00"
+        android:startColor="#fff"
+        android:endColor="#f00"
+        android:type="sweep"
+        />
+    
+    <!-- 
+    
+    gradient  定义一个渐变
+     android:centerColor="#9f00"   中间的颜色
+        android:startColor="#fff"  开始的颜色
+        android:endColor="#f00"  结束的颜色
+        android:type="sweep"  渐变的类型
+    
+     -->
+
+</shape>
+</rotate>

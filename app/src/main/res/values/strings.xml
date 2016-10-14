@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AcBi</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_start">开始体验</string>
+    <string name="main_tab_max">综合</string>
+    <string name="main_tab_news">热门</string>
+    <string name="main_tab_explore">发现</string>
+    <string name="main_tab_me">我的</string>
+    <string name="user_score">积分</string>
+    <string name="favorite">收藏</string>
+    <string name="following">关注</string>
+    <string name="follower">粉丝</string>
+    <string name="my_information_unlogin_tips">未登录</string>
+    <string name="message">消息</string>
+    <string name="blog">博客</string>
+    <string name="note">便签</string>
+    <string name="team">团队</string>
+    <string name="active">好友圈</string>
+    <string name="activities">活动</string>
+    <string name="scan">扫一扫</string>
+    <string name="friends">同城</string>
+    <string name="find_oscer">找人</string>
+    <string name="shake">摇一摇</string>
+    <string name="enter">进入体验</string>
+    <string name="page_load_error">加载出错啦-.-</string>
+    <string name="page_load_empty">没有数据哦-.-</string>
+    <string name="main_tab_name_news">综合</string>
+    <string name="main_tab_name_tweet">动弹</string>
+    <string name="main_tab_name_quick">快速</string>
+    <string name="main_tab_name_question">问答</string>
+    <string name="main_tab_name_my">我的</string>
+    <string name="main_tab_name_explore">发现</string>
+    <string name="share">分享</string>
+    <string name="load_more">下拉加载更多</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
