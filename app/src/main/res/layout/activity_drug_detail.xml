@@ -9,7 +9,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
         <ImageView
-            android:background="@drawable/dogeload"
             android:layout_marginLeft="@dimen/space_5"
             android:layout_marginRight="@dimen/space_5"
             android:id="@+id/iv_acDrugDetail"
