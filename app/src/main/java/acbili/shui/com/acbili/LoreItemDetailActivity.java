@@ -53,6 +53,7 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
     private CheckBox cb_dialog_if_shareToWeibo;//单选框 选择是否分享到微博
     private TextView tv_dialog_text_count;//分享到微博的字数
     private TextView tv_dialog_comfirToSend;//确认发送评论
+    private String TAG=Urls.URL_LORE+"show" ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -103,10 +104,10 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
     protected void onStart() {
         super.onStart();
         OkHttpUtils.get( Urls.URL_LORE+"show" )
-                .tag( this )
+                .tag( TAG )
                 .params( "id",getID )
                 .cacheTime( 60*60*2 )
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
                 .execute( new LoreItemCallback( this ) );
     }
 
@@ -166,9 +167,18 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
         }
 
         @Override
+        public void onCacheSuccess(AcLoreDetailModel.LoreDetail loreDetail, Call call) {
+            LayoutData( loreDetail );
+        }
+
+        @Override
         public void onSuccess(AcLoreDetailModel.LoreDetail loreDetail, Call call, Response response) {
+           LayoutData( loreDetail );
+        }
+        private void LayoutData(AcLoreDetailModel.LoreDetail loreDetail)
+        {
             HtmlImageGetter imageGetter=new HtmlImageGetter( tv_acLoreItemContent );
-            Spanned spanned=Html.fromHtml( loreDetail.message,imageGetter,null );
+            Spanned spanned= Html.fromHtml( loreDetail.message,imageGetter,null );
             tv_acLoreItemTitle.setText( loreDetail.title );
             tv_acLoreItemDes.setText( loreDetail.description );
             tv_acLoreItemContent.setText( spanned );

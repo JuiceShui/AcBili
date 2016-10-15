@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 import acbili.shui.com.acbili.DrugDetailActivity;
 import acbili.shui.com.acbili.R;
-import acbili.shui.com.adapter.AdapterPlus;
 import acbili.shui.com.adapter.AdapterPluss;
 import acbili.shui.com.base.BaseFragment;
 import acbili.shui.com.bean.DrugModel;
 import acbili.shui.com.callBack.DialogCallback;
+import acbili.shui.com.global.NetState;
 import acbili.shui.com.global.Urls;
 import acbili.shui.com.utils.UIUtils;
 import okhttp3.Call;
@@ -49,6 +49,7 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
     private  boolean lastVisibleItem;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<DrugModel.Drug> data;
+    private String TAG=Urls.URL_DRUG+"list";
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= UIUtils.inflate( R.layout.layout_waterfall );
@@ -78,14 +79,14 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged( recyclerView, newState );
                 //如果最后一个item已经展示 且滑动状态为停止
-                if (newState==RecyclerView.SCROLL_STATE_IDLE&&lastVisibleItem)
+                if (NetState.isNetworkConnected( UIUtils.getContext() )&&newState==RecyclerView.SCROLL_STATE_IDLE&&lastVisibleItem)
                 {
                     int size=mAdapter.getItemCount();
                     //mSwipeRefreshLayout.setRefreshing( true );
                     //加载更多数据
                     OkHttpUtils.get( Urls.URL_DRUG+"list" )
                             .tag( this )
-                            .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+                            .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
                             .cacheTime( 60*60*2 )
                             .params( "page",(size/20)+1 )
                             .execute( new LoadMore() );
@@ -96,8 +97,8 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     protected void initData() {
         OkHttpUtils.get( Urls.URL_DRUG+"list" )
-                .tag( this )
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+                .tag( TAG )
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
                 .cacheTime( 60*60*2 )
                 .params( "page","1" )
                 .execute( new DrugCallback( getActivity() ) );
@@ -129,6 +130,15 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
 
         @Override
         public void onSuccess(final DrugModel drugModel, Call call, Response response) {
+            LayoutData( drugModel );
+        }
+
+        @Override
+        public void onCacheSuccess(DrugModel drugModel, Call call) {
+            LayoutData( drugModel );
+        }
+        private void  LayoutData(final DrugModel drugModel)
+        {
             data=drugModel.tngou;
             mAdapter= new AdapterPluss( data );
             mAdapter.setListener( new AdapterPluss.OnItemClickLitener() {
@@ -147,9 +157,9 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd( animation );
-                           /** Toast.makeText( getActivity(),"点击了item"+position+"::内容"+
-                                    drugModel.tngou.get( position ).name+"id"+drugModel.tngou.get( position ).id, Toast.LENGTH_SHORT ).show();
-                            */
+                            /** Toast.makeText( getActivity(),"点击了item"+position+"::内容"+
+                             drugModel.tngou.get( position ).name+"id"+drugModel.tngou.get( position ).id, Toast.LENGTH_SHORT ).show();
+                             */
                             Intent intent=new Intent(  );
                             intent.setClass( getActivity(), DrugDetailActivity.class );
                             intent.putExtra( "ID",drugModel.tngou.get( position ).id );
@@ -159,12 +169,6 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             } );
             recyclerView.setAdapter(mAdapter);
-        }
-
-        @Override
-        public void onCacheSuccess(DrugModel drugModel, Call call) {
-            super.onCacheSuccess( drugModel, call );
-            recyclerView.setAdapter( new AdapterPlus(getActivity(), drugModel.tngou ) );
         }
     }
     private class SpacesItemDecoration extends RecyclerView.ItemDecoration {

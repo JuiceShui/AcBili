@@ -31,6 +31,7 @@ import okhttp3.Response;
  */
 
 public class FragmentNews extends BaseFragment{
+    private String TAG=Urls.URL_TOP+"list";
     private  MyListView listView;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +55,8 @@ public class FragmentNews extends BaseFragment{
                 .headers("header1", "headerValue1")//
                 .params( "page","2" )
                 .cacheTime( 60*60*2 )
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
-                .tag( this )
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
+                .tag( TAG )
                 .execute( new FragmentNewsCallback( getActivity() ) );
     }
     private class FragmentNewsCallback extends DialogCallback<NewsModel>

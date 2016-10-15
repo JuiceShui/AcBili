@@ -25,6 +25,7 @@ import okhttp3.Response;
  */
 
 public class FragmentCook extends BaseFragment {
+    private String TAG=Urls.URL_COOK+"list";
     private MyListView listView;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,9 +36,9 @@ public class FragmentCook extends BaseFragment {
     @Override
     protected void initData() {
         OkHttpUtils.get( Urls.URL_COOK+"list" )
-                .tag( this )
+                .tag( TAG )
                 .headers("header1", "headerValue1")//
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
                 .cacheTime( 60*60*2 )
                 .params( "page","1" )
                 .execute( new CookCallBack( getActivity() ) );

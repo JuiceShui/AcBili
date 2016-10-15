@@ -33,6 +33,7 @@ import okhttp3.Response;
  */
 
 public class CateLoreDetailActivity extends BaseActivity {
+    private String TAG=Urls.URL_LORE+"list";
     private MyListView listView;
     private Intent intent;
     private  int Id;
@@ -73,8 +74,8 @@ public class CateLoreDetailActivity extends BaseActivity {
         super.onStart();
         OkHttpUtils.get( Urls.URL_LORE+"list" )
         .params( "id",Id )
-        .tag( this )
-        .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+        .tag( TAG )
+        .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
         .cacheTime( 60*606*2 )
         .execute(  new CateLoreDetailCallback( this ));
     }
@@ -89,6 +90,12 @@ public class CateLoreDetailActivity extends BaseActivity {
 
         public CateLoreDetailCallback(Activity activity) {
             super( activity, AcLoreDetailModel.class );
+        }
+
+        @Override
+        public void onCacheSuccess(AcLoreDetailModel acLoreDetailModel, Call call) {
+            data=acLoreDetailModel.tngou;
+            listView.setAdapter( new AcAdapterLoreDetail( data,Id ) );
         }
 
         @Override

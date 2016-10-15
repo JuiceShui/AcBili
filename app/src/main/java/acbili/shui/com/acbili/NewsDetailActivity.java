@@ -36,6 +36,7 @@ public class NewsDetailActivity extends BaseActivity {
     private TextView tv_NewsDetailContent;
     private int ID;
     private  static Drawable drawable =null;
+    private String TAG=Urls.URL_TOP+"show";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -71,9 +72,9 @@ public class NewsDetailActivity extends BaseActivity {
         super.onStart();
         OkHttpUtils.get( Urls.URL_TOP+"show" )
                 .params( "id",ID )
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
                 .cacheTime( 60*60*2 )
-                .tag( this )
+                .tag( TAG )
                 .execute( new NewsDetailCallback( this ) );
                 ;
     }
@@ -85,12 +86,21 @@ public class NewsDetailActivity extends BaseActivity {
         }
 
         @Override
+        public void onCacheSuccess(NewsModel.NewsContent newsContent, Call call) {
+            LayoutData( newsContent );
+        }
+
+        @Override
         public void onSuccess(NewsModel.NewsContent newsContent, Call call, Response response) {
-                tv_NewsDetailTitle.setText( newsContent.title );
-                tv_NewsDetailDes.setText( newsContent.description );
-                Glide.with( NewsDetailActivity.this )
+                LayoutData( newsContent );
+        }
+        private  void LayoutData(NewsModel.NewsContent newsContent)
+        {
+            tv_NewsDetailTitle.setText( newsContent.title );
+            tv_NewsDetailDes.setText( newsContent.description );
+            Glide.with( NewsDetailActivity.this )
                     .load( GApp.ImgHeader+newsContent.img )
-                        .placeholder( R.drawable.dogeload )
+                    .placeholder( R.drawable.dogeload )
                     .into( iv_NewsDetailPic );
             HtmlImageGetter imageGetter=new HtmlImageGetter(tv_NewsDetailContent);
             Spanned spanned = Html.fromHtml(newsContent.message, imageGetter, null);

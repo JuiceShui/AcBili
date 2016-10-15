@@ -24,6 +24,7 @@ import okhttp3.Response;
  */
 
 public class FragmentLore extends BaseFragment {
+    private String TAG=Urls.URL_LORE+"classify" ;
     private GridView gridView;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class FragmentLore extends BaseFragment {
         OkHttpUtils.get( Urls.URL_LORE+"classify" )
                 .cacheTime( 60*60*2 )
                 .headers("header1", "headerValue1")//
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
-                .tag( this )
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
+                .tag( TAG )
                 .execute( new LoreGridCallback( getActivity()) );
     }
 

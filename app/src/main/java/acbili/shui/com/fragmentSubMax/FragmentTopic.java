@@ -40,16 +40,16 @@ public class FragmentTopic extends BaseFragment {
     @Override
     protected void initData() {
         OkHttpUtils.get( Urls.URL_TOP+"list")//
-                .tag(TAG)//
+                .tag(Urls.URL_TOP+"list")//
                 .headers("header1", "headerValue1")//
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE)
                 .cacheTime(60*60*2)
                 .params("page", "1")//
                 .execute(new TopNewsCallback( getActivity() ));
         OkHttpUtils.get( Urls.URL_IMG+"list")//
-                .tag(TAG)//
+                .tag(Urls.URL_IMG+"list")//
                 .headers("header1", "headerValue1")//
-                .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE)
                 .cacheTime(60*60*2)
                 .params("page", "1")//
                 .params( "row","6" )
@@ -67,9 +67,9 @@ public class FragmentTopic extends BaseFragment {
             // view2.setText("请求成功  是否来自缓存：false  请求方式：" + call.request().method() + "\n" + "url：" + call.request().url());
             listView.setAdapter( new AdapterTopNews( requestInfo.tngou ) );
         }
-
         @Override
         public void onCacheSuccess(NewsModel requestInfo, Call call) {
+            System.out.println("缓存请求成功");
             listView.setAdapter( new AdapterTopNews( requestInfo.tngou ) );
         }
 
@@ -80,7 +80,7 @@ public class FragmentTopic extends BaseFragment {
 
         @Override
         public void onCacheError(Call call, Exception e) {
-
+            System.out.println("缓存请求失败");
         }
     }
     class PicCallBack extends  DialogCallback<HeaderMoldel>

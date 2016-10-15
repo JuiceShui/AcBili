@@ -34,6 +34,7 @@ public class NewsDetailsWebActivity extends BaseActivity implements OnClickListe
 	private String mTitle;
 	private String mData;
 	private int mId;
+	private String TAG=Urls.URL_TOP+"show";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +69,9 @@ public class NewsDetailsWebActivity extends BaseActivity implements OnClickListe
 
 	private void loadData() {
 		OkHttpUtils.get( Urls.URL_TOP+"show" )
-				.cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+				.cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
 				.cacheTime( 60*60*2 )
-				.tag( this )
+				.tag( TAG )
 				.params( "id" ,mId)
 				.execute( new NewsDetailCallback( this ) );
 				;
@@ -173,9 +174,18 @@ public class NewsDetailsWebActivity extends BaseActivity implements OnClickListe
 		}
 
 		@Override
+		public void onCacheSuccess(NewsModel.NewsContent newsContent, Call call) {
+			LayoutData( newsContent );
+		}
+
+		@Override
 		public void onSuccess(NewsModel.NewsContent newsContent, Call call, Response response) {
+				LayoutData( newsContent );
+		}
+		private  void  LayoutData(NewsModel.NewsContent newsContent)
+		{
 			mData=newsContent.message;
-		//	tv_newsDetailTitle.setText(mTitle);
+			//	tv_newsDetailTitle.setText(mTitle);
 			//下面的这个方法不能加载图片  只是转化为纯文本
 			//webView.loadDataWithBaseURL(null,Html.fromHtml(mData)+"", "text/html",  "utf-8", null);
 			webView.loadDataWithBaseURL(null,mData+"", "text/html",  "utf-8", null);

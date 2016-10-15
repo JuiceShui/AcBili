@@ -28,6 +28,7 @@ import okhttp3.Response;
  */
 
 public class DrugDetailActivity extends BaseActivity {
+    private String TAG=Urls.URL_DRUG+"show";
     private  int mId;
     private Intent mIntent;
     private RelativeLayout rl_imgAndInfo;//包含图像 价格 名称的布局
@@ -53,9 +54,9 @@ public class DrugDetailActivity extends BaseActivity {
      */
     private void InitData() {
         OkHttpUtils.get( Urls.URL_DRUG+"show")
-        .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
+        .cacheMode( CacheMode.REQUEST_FAILED_READ_CACHE )
         .cacheTime( 60*60*2 )
-        .tag( this )
+        .tag( TAG )
         .params( "id",mId )
         .execute( new DrugDetailCallback( this ) );
     }
@@ -84,7 +85,16 @@ public class DrugDetailActivity extends BaseActivity {
         }
 
         @Override
+        public void onCacheSuccess(AcDrugDetailModel acDrugDetailModel, Call call) {
+            LayoutData( acDrugDetailModel );
+        }
+
+        @Override
         public void onSuccess(AcDrugDetailModel acDrugDetailModel, Call call, Response response) {
+            LayoutData( acDrugDetailModel );
+        }
+        private void LayoutData(AcDrugDetailModel acDrugDetailModel)
+        {
             AcDrugDetailModel model=new AcDrugDetailModel();
             StringBuilder sb=new StringBuilder(  );
             StringBuilder sb2=new StringBuilder(  );
@@ -99,11 +109,11 @@ public class DrugDetailActivity extends BaseActivity {
                 tv_code.setVisibility( View.VISIBLE );
                 for (int i=0;i<acDrugDetailModel.codes.size();i++)
                 {
-                        AcDrugDetailModel.code  c=model.new code();
-                         c=acDrugDetailModel.codes.get( i );
-                        sb.append( i+1+":厂商："+c.factory+"\n");
-                        sb.append( "条形码："+c.code );
-                        sb.append( "\n" );
+                    AcDrugDetailModel.code  c=model.new code();
+                    c=acDrugDetailModel.codes.get( i );
+                    sb.append( i+1+":厂商："+c.factory+"\n");
+                    sb.append( "条形码："+c.code );
+                    sb.append( "\n" );
                 }
                 tv_code.setText( sb.toString() );
             }
@@ -121,5 +131,6 @@ public class DrugDetailActivity extends BaseActivity {
                 tv_number.setText( sb2.toString() );
             }
         }
+
     }
 }
