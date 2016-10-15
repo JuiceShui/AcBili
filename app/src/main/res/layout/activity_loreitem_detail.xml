@@ -96,8 +96,9 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal">
-        <EditText
-            android:id="@+id/ev_acLoreItemEdit"
+
+        <TextView
+            android:id="@+id/tv_acLoreItemEdit"
             android:gravity="center_horizontal|center_vertical"
             android:background="#ffffffff"
             android:layout_margin="@dimen/space_5"
@@ -107,13 +108,14 @@
             android:layout_weight="3"
             android:layout_height="match_parent"
           />
+
         <ImageView
             android:id="@+id/iv__acLoreItemRead"
             android:gravity="center_horizontal|center_vertical"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:padding="@dimen/space_2"
-            android:src="@drawable/read_icon"
+            android:src="@drawable/icon_read"
             android:layout_width="wrap_content"
            />
         <ImageView
@@ -122,7 +124,7 @@
             android:layout_margin="@dimen/space_2"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:src="@drawable/collection_icon"
+            android:src="@drawable/icon_collection"
             android:layout_width="wrap_content"
            />
         <ImageView
@@ -131,7 +133,7 @@
             android:layout_margin="@dimen/space_2"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:src="@drawable/share_icon"
+            android:src="@drawable/icon_shares"
             android:layout_width="wrap_content"
             />
     </LinearLayout>

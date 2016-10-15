@@ -19,5 +19,6 @@
     <dimen name="space_13">13dp</dimen>
     <dimen name="space_20">20dp</dimen>
     <dimen name="space_30">30dp</dimen>
+    <dimen name="dialog_height">200dp</dimen>
 
 </resources>

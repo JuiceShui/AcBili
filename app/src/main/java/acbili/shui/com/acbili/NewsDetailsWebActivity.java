@@ -125,6 +125,9 @@ public class NewsDetailsWebActivity extends BaseActivity implements OnClickListe
 			case R.id.iv_back:
 				finish();
 				break;
+			case R.id.btn_news_details_share:
+				//分享事件
+				break;
 			default:
 				break;
 		}
@@ -184,4 +187,5 @@ public class NewsDetailsWebActivity extends BaseActivity implements OnClickListe
 		super.onDestroy();
 		OkHttpUtils.getInstance().cancelTag( this );
 	}
+
 }

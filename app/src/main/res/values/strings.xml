@@ -35,6 +35,9 @@
     <string name="main_tab_name_explore">发现</string>
     <string name="share">分享</string>
     <string name="load_more">下拉加载更多</string>
+    <string name="sharetoweibo">同时转发到微博</string>
+    <string name="send">发送</string>
+    <string name="edit_hint">我来说两句......</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -1,13 +1,18 @@
 package acbili.shui.com.acbili;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,8 +46,13 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
     private ImageView iv_acLoreItemRead;
     private ImageView iv_acLoreItemCollect;
     private ImageView iv_acLoreItemShare;
-    private EditText ev_acLoreItemEdit;
+    private TextView tv_acLoreItemEdit;
+    private Dialog mDialog;//对话框
+    private View dialogView;//对话框的布局
     private long getID;
+    private CheckBox cb_dialog_if_shareToWeibo;//单选框 选择是否分享到微博
+    private TextView tv_dialog_text_count;//分享到微博的字数
+    private TextView tv_dialog_comfirToSend;//确认发送评论
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -58,6 +68,7 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
     private void initEvent() {
         iv_acLoreItemBack.setOnClickListener( this );
         iv_acLoreItemMore.setOnClickListener( this );
+        tv_acLoreItemEdit.setOnClickListener( this );
     }
 
     @Override
@@ -85,6 +96,7 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
         iv_acLoreItemRead= (ImageView) findViewById( R.id.iv__acLoreItemRead );
         iv_acLoreItemShare= (ImageView) findViewById( R.id.iv__acLoreItemShare );
         iv_acLoreItemPic= (ImageView) findViewById( R.id.iv_acLoreItemPic );
+        tv_acLoreItemEdit= (TextView) findViewById( R.id.tv_acLoreItemEdit );
     }
 
     @Override
@@ -113,9 +125,39 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.iv__acLoreItemRead:
                 break;
+            case R.id.tv_acLoreItemEdit:
+               ShowDialog();
+                break;
         }
     }
-
+    //点击输入弹出对话框
+    public  void ShowDialog()
+    {
+        mDialog = new Dialog(this,R.style.ActionSheetDialogStyle);
+        //填充对话框的布局
+        dialogView = LayoutInflater.from(this).inflate(R.layout.view_dialog, null);
+        //初始化控件
+        cb_dialog_if_shareToWeibo = (CheckBox) dialogView.findViewById(R.id.cb_dialog_check);
+        tv_dialog_text_count = (TextView) dialogView.findViewById(R.id.tv_dialog_textcount);
+        tv_dialog_comfirToSend= (TextView) dialogView.findViewById( R.id.tv_dialog_comfirm_to_send );
+        tv_dialog_comfirToSend.setOnClickListener(this);
+        tv_dialog_text_count.setOnClickListener(this);
+        cb_dialog_if_shareToWeibo.setOnClickListener( this );
+        //将布局设置给Dialog
+        mDialog.setContentView(dialogView);
+        //获取当前Activity所在的窗体
+        Window dialogWindow = mDialog.getWindow();
+        //设置Dialog从窗体底部弹出
+        dialogWindow.setGravity( Gravity.BOTTOM);
+        //获得窗体的属性
+       WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+       // lp.y = 20;//设置Dialog距离底部的距离
+        lp.width=WindowManager.LayoutParams.MATCH_PARENT;//宽度全屏
+        lp.height=WindowManager.LayoutParams.WRAP_CONTENT;
+//       将属性设置给窗体
+      dialogWindow.setAttributes(lp);
+        mDialog.show();//显示对话框
+    }
     class LoreItemCallback extends DialogCallback<AcLoreDetailModel.LoreDetail>
     {
 
