@@ -60,6 +60,13 @@ public class DrugDetailActivity extends BaseActivity {
         .params( "id",mId )
         .execute( new DrugDetailCallback( this ) );
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+
     /**
      * 初始化布局
      */

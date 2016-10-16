@@ -83,7 +83,7 @@ public class CateLoreDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        OkHttpUtils.getInstance().cancelTag( this );
+        OkHttpUtils.getInstance().cancelTag( TAG );
     }
     private  class  CateLoreDetailCallback extends DialogCallback<AcLoreDetailModel>
     {

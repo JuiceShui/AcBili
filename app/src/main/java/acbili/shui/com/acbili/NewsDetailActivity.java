@@ -53,6 +53,12 @@ public class NewsDetailActivity extends BaseActivity {
         ID=mIntent.getIntExtra( "ID",0 );
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+
     /**
      * 初始化布局
      */

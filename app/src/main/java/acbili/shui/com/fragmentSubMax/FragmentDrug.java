@@ -26,6 +26,7 @@ import okhttp3.Response;
 
 public class FragmentDrug extends BaseFragment {
     private ListView listView;
+    private String TAG= Urls.URL_DRUG+"list";
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         listView=new ListView( getActivity() );
@@ -34,11 +35,25 @@ public class FragmentDrug extends BaseFragment {
     @Override
     protected void initData() {
         OkHttpUtils.get( Urls.URL_DRUG+"list" )
-                .tag( this )
+                .tag( TAG )
                 .cacheMode( CacheMode.FIRST_CACHE_THEN_REQUEST )
                 .cacheTime( 60*60*2 )
                 .params( "page","1" )
                 .execute( new DrugCallback( getActivity() ) );
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    protected void onInvisible() {
+        super.onInvisible();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        OkHttpUtils.getInstance().cancelTag( TAG );
     }
     private  class  DrugCallback extends DialogCallback<DrugModel>
     {

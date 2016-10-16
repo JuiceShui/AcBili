@@ -43,7 +43,20 @@ public class FragmentLore extends BaseFragment {
                 .tag( TAG )
                 .execute( new LoreGridCallback( getActivity()) );
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    protected void onInvisible() {
+        super.onInvisible();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
     private class LoreGridCallback extends DialogCallback<LoreGridModel>
     {
 

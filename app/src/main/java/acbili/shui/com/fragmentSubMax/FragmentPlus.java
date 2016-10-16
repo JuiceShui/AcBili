@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -106,9 +105,23 @@ public class FragmentPlus extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        Toast.makeText( getActivity(),"aaaaaaaaaaaaaa",Toast.LENGTH_SHORT ).show();
+
+    }
+    protected void onInvisible() {
+        super.onInvisible();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
     /**
      * 检验是否已经显示到了最后一个item
      * @param recyclerView

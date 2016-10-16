@@ -1,7 +1,5 @@
 package acbili.shui.com.utils;
 
-import java.lang.reflect.Method;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -21,7 +19,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
 
- 
+import java.lang.reflect.Method;
+
+
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class SystemStatusManager 
 {
@@ -71,8 +71,11 @@ public class SystemStatusManager
                     android.R.attr.windowTranslucentNavigation};
             TypedArray a = activity.obtainStyledAttributes(attrs);
             try {
+
                 mStatusBarAvailable = a.getBoolean(0, false);
-                mNavBarAvailable = a.getBoolean(1, false);
+                //这里是
+                mNavBarAvailable = a.getBoolean( 1, false);
+                //mNavBarAvailable = false;
             } finally {
                 a.recycle();
             }

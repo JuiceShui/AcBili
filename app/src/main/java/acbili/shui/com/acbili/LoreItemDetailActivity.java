@@ -112,6 +112,17 @@ public class LoreItemDetailActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    @Override
     public void onClick(View v) {
         switch (v.getId())
         {

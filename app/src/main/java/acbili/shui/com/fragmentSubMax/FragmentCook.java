@@ -43,6 +43,23 @@ public class FragmentCook extends BaseFragment {
                 .params( "page","1" )
                 .execute( new CookCallBack( getActivity() ) );
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+    protected void onInvisible() {
+        super.onInvisible();
+        OkHttpUtils.getInstance().cancelTag( TAG );
+    }
+
     private  class  CookCallBack extends DialogCallback<CookModel>
     {
 
