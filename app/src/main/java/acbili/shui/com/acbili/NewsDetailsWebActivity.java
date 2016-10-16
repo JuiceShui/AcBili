@@ -174,11 +174,11 @@ public class NewsDetailsWebActivity extends BaseActivity implements OnClickListe
 		public void onCacheSuccess(NewsModel.NewsContent newsContent, Call call) {
 			LayoutData( newsContent );
 		}
-
 		@Override
 		public void onSuccess(NewsModel.NewsContent newsContent, Call call, Response response) {
 				LayoutData( newsContent );
 		}
+		//展示数据
 		private  void  LayoutData(NewsModel.NewsContent newsContent)
 		{
 			mData=newsContent.message;
