@@ -35,4 +35,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile files('libs/glide-3.6.1.jar')
+    compile files('libs/MobCommons-2016.0830.1940.jar')
 }
